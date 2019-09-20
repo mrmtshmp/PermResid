@@ -61,13 +61,13 @@ mf.resid <- function(
 mf.perm.resid <- function(
   data = data_long.vs.Jnt,
   n.perm = 500,
-  model = my.model,
+  model.lm = my.model,
   var = "Visit"
   ){
 
   df.itt <- data.frame(
     "itt" = seq(1:n.perm)
-  )
+    )
 
   data_long.vs.Jnt.perm <- data
 
