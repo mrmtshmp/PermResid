@@ -14,18 +14,19 @@
 
 
 mf.resid <- function(
-  data_long.vs.Jnt, model = my.model, var = "Visit"
+  data, model.lm = my.model, var = "Visit"
 ){
-  data_long.vs.Jnt$var <- data_long.vs.Jnt[,var]
+  ads     <- data
+  ads$var <- data[,var]
   res.resid <-
-    data_long.vs.Jnt %>%
+    ads %>%
     ddply(
       .(Meas, var),
       function(D){
         print(names(D))
 
         res.lm <- lm(
-          model,
+          model.lm,
           data = D
           )
 
