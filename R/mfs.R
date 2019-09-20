@@ -77,7 +77,7 @@ mf.perm.resid <- function(
   ads <- data
 
   ads[,"var.ori"] <-
-    ads[,var]
+    ads[,as.character(var)]
 
   list.perm.resid <- df.itt %>%
     dlply(
@@ -96,19 +96,18 @@ mf.perm.resid <- function(
               .(SubjID),
               function(D){
                 print(head(data))
-                print(as.character(var))
                 print(
                   unique(data[, as.character(var)])
                   )
                 var.shfl <- sample(
-                  unique(data[, var])
+                  unique(data[, as.character(var)])
                   )
                 res <- expand.grid(
                   "SubjID"  =
                     D$SubjID,
                   "var.ori" =
                     unique(
-                      data[, var]
+                      data[, as.character(var)]
                       )
 
                   ) %>%
