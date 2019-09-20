@@ -95,7 +95,7 @@ mf.perm.resid <- function(
             ddply(
               .(SubjID),
               function(D){
-                print(head(D))
+                print(head(data))
                 print(
                   unique(data[, var])
                   )
