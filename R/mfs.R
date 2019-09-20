@@ -25,18 +25,21 @@ mf.resid <- function(
         print(names(D))
 
         res.lm <- lm(
-          my.model, data = D
-        )
+          model,
+          data = D
+          )
 
         sample.size <-
           length(
             res.lm$residuals
-          )
+            )
 
         return(
           data.frame(
-            "resd.coef" = sum(res.lm$residuals**2)/sample.size,
-            "coeff"     = t(res.lm$coefficients)
+            "resd.coef" = sum(res.lm$residuals**2)/
+              sample.size,
+            "coeff"     =
+              t(res.lm$coefficients)
           )
         )
       }
@@ -86,17 +89,23 @@ mf.perm.resid <- function(
             data.frame(
               "SubjID" =
                 unique(data_long.vs.Jnt$SubjID)
-            ) %>%
+              ) %>%
             ddply(
               .(SubjID),
               function(D){
                 var.shfl <- sample(
                   unique(data_long.vs.Jnt[, var])
-                )
+                  )
                 res <- expand.grid(
-                  "SubjID"  = D$SubjID,
-                  "var.ori" = unique(data_long.vs.Jnt[, var])
-                ) %>% data.frame()
+                  "SubjID"  =
+                    D$SubjID,
+                  "var.ori" =
+                    unique(
+                      data_long.vs.Jnt[, var]
+                      )
+
+                  ) %>%
+                  data.frame()
 
                 colnames(res) <-
                   c("Var1", "var.ori")
@@ -118,7 +127,7 @@ mf.perm.resid <- function(
             left_join(
               perm.by.SubjID,
               by = c("SubjID", "var.ori")
-            )
+              )
         }
         res <- try(
           ADS.perm %>%
