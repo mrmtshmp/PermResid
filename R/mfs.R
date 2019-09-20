@@ -96,6 +96,7 @@ mf.perm.resid <- function(
               .(SubjID),
               function(D){
                 print(head(data))
+                print(var)
                 print(
                   unique(data[, var])
                   )
