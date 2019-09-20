@@ -23,7 +23,6 @@ mf.resid <- function(
     ddply(
       .(Meas, var),
       function(D){
-        print(names(D))
 
         res.lm <- lm(
           model.lm,
