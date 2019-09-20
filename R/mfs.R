@@ -120,8 +120,11 @@ mf.perm.resid <- function(
               by = c("SubjID", "var.ori")
             )
         }
-        res <- ADS.perm %>%
-          mf.resid(var="var.shfl")
+        res <- try(
+          ADS.perm %>%
+            mf.resid(var="var.shfl")
+          )
+        if(class(res)=="try-error") res <- NA
 
         return(list(res,data_long.vs.Jnt.perm))
       }
