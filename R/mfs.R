@@ -95,7 +95,10 @@ mf.perm.resid <- function(
             ddply(
               .(SubjID),
               function(D){
-                print(unique(data[, var]))
+                print(head(D))
+                print(
+                  unique(data[, var])
+                  )
                 var.shfl <- sample(
                   unique(data[, var])
                   )
