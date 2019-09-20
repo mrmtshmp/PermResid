@@ -5,8 +5,8 @@
 #' @import dplyr
 #' @import tibble
 #'
-#' @param data_long.vs.Jnt A dataframe with column of
-#' @param model A formula for lm() function to calculate residuals.
+#' @param data A dataframe with column of
+#' @param model.lm A formula for lm() function to calculate residuals.
 #' @param var A character vector to specify the categorical variate to differring the residuals.
 #'
 #' @export
@@ -69,40 +69,42 @@ mf.perm.resid <- function(
   var = "Visit"
   ){
 
+  .model.lm <- model.lm
+
   df.itt <- data.frame(
     "itt" = seq(1:n.perm)
     )
 
-  data_long.vs.Jnt.perm <- data
+  ads <- data
 
-  data_long.vs.Jnt.perm[,"var.ori"] <-
-    data_long.vs.Jnt.perm[,var]
+  ads[,"var.ori"] <-
+    ads[,var]
 
   list.perm.resid <- df.itt %>%
     dlply(
       .(itt),
       function(i){
         if(i == 1) ADS.perm <-
-            data_long.vs.Jnt.perm %>%
+            ads %>%
             dplyr::rename("var.shfl"="var.ori")
         if(i > 1){
           perm.by.SubjID <-
             data.frame(
               "SubjID" =
-                unique(data_long.vs.Jnt$SubjID)
+                unique(data$SubjID)
               ) %>%
             ddply(
               .(SubjID),
               function(D){
                 var.shfl <- sample(
-                  unique(data_long.vs.Jnt[, var])
+                  unique(data[, var])
                   )
                 res <- expand.grid(
                   "SubjID"  =
                     D$SubjID,
                   "var.ori" =
                     unique(
-                      data_long.vs.Jnt[, var]
+                      data[, var]
                       )
 
                   ) %>%
@@ -124,7 +126,7 @@ mf.perm.resid <- function(
             )
 
           ADS.perm <-
-            data_long.vs.Jnt.perm %>%
+            ads %>%
             left_join(
               perm.by.SubjID,
               by = c("SubjID", "var.ori")
@@ -132,7 +134,7 @@ mf.perm.resid <- function(
         }
         res <- try(
           ADS.perm %>%
-            mf.resid(var="var.shfl")
+            mf.resid(model.lm=.model.lm, var="var.shfl")
           )
         if(class(res)=="try-error") res <- NA
 
