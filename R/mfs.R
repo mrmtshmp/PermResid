@@ -80,7 +80,7 @@ mf.perm.resid <- function(
       function(i){
         if(i == 1) ADS.perm <-
             data_long.vs.Jnt.perm %>%
-            rename("var.shfl"="var.ori")
+            dplyr::rename("var.shfl"="var.ori")
         if(i > 1){
           perm.by.SubjID <-
             data.frame(
