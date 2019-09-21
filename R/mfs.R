@@ -15,7 +15,7 @@
 
 mf.resid <- function(
   data, model.lm = my.model, var = "Visit"
-){
+  ){
   ads     <- data
   ads$var <- data[,var]
   res.resid <-
@@ -95,10 +95,6 @@ mf.perm.resid <- function(
             ddply(
               .(SubjID),
               function(D){
-                print(head(data))
-                print(
-                  unique(data[, as.character(var)])
-                  )
                 var.shfl <- sample(
                   unique(data[, as.character(var)])
                   )
